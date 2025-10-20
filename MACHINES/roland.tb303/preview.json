@@ -1,0 +1,44 @@
+{
+  "machine": "moog.subsequent37",
+  "dsp": {
+    "oscillators": {
+      "count": 2,
+      "waveforms": ["saw", "square", "triangle"],
+      "detune": true,
+      "sync": true
+    },
+    "filter": {
+      "type": "ladder",
+      "poles": 4,
+      "cutoffRange": [20, 20000],
+      "resonance": true,
+      "selfOscillation": true
+    },
+    "envelopes": {
+      "count": 2,
+      "type": "ADSR"
+    },
+    "lfo": {
+      "count": 1,
+      "waveforms": ["sine", "square", "triangle", "saw"]
+    }
+  },
+  "presets": [
+    {
+      "name": "Bass Classic",
+      "params": {
+        "cutoff": 0.4,
+        "resonance": 0.6,
+        "attack": 0.0,
+        "decay": 0.3,
+        "sustain": 0.5,
+        "release": 0.2
+      }
+    }
+  ],
+  "notes": [
+    "TODO: Affiner les paramètres DSP pour la pré-écoute",
+    "TODO: Ajouter plus de presets caractéristiques"
+  ]
+}
+

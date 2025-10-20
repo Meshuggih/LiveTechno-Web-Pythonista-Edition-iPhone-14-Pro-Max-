@@ -1,0 +1,21 @@
+# CODEOWNERS - Propriétaires de code par défaut
+
+# Global
+* @Meshuggih
+
+# Schémas JSON
+/SCHEMAS/ @Meshuggih
+
+# Machines
+/MACHINES/ @Meshuggih
+
+# Documentation
+/DOCUMENTATION/ @Meshuggih
+
+# Maquette Pythonista
+/PYTHONISTA/ @Meshuggih
+
+# Outils et tests
+/TOOLS/ @Meshuggih
+/TESTS/ @Meshuggih
+

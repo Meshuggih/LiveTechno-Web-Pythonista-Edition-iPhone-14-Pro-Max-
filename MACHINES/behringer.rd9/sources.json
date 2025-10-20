@@ -1,0 +1,19 @@
+{
+  "machine": "moog.subsequent37",
+  "sources": [
+    {
+      "type": "manual",
+      "url": "https://www.moogmusic.com/support",
+      "description": "Manuel officiel Moog Subsequent 37",
+      "pages": "TODO: Pages MIDI Implementation",
+      "revision": "TODO",
+      "accessed": "2025-10-20"
+    }
+  ],
+  "notes": [
+    "TODO: Compléter avec les références exactes du manuel officiel",
+    "TODO: Identifier les pages MIDI Implementation Chart",
+    "TODO: Noter la révision du firmware si pertinent"
+  ]
+}
+

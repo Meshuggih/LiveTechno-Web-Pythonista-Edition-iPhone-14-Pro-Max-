@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "ExportPlan.v1.schema.json",
+  "title": "ExportPlan",
+  "description": "Action : Planifier l'export MIDI multi-pistes",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "ExportPlan.v1",
+      "description": "Version du schéma"
+    },
+    "bpm": {
+      "type": "number",
+      "minimum": 20,
+      "maximum": 300,
+      "description": "Tempo (BPM)"
+    },
+    "signature": {
+      "type": "string",
+      "pattern": "^[0-9]+/[0-9]+$",
+      "description": "Signature rythmique (ex: 4/4, 3/4)"
+    },
+    "tracks": {
+      "type": "array",
+      "description": "Pistes à exporter",
+      "items": {
+        "type": "object",
+        "properties": {
+          "machine": {
+            "type": "string",
+            "description": "Machine source (instanceId ou machineId)"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["midi"],
+            "description": "Type de piste (pour l'instant, uniquement MIDI)"
+          },
+          "channel": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "description": "Canal MIDI"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nom de la piste (ex: BASS, DRUMS, LEAD)"
+          }
+        },
+        "required": ["machine", "type", "channel", "name"]
+      },
+      "minItems": 1
+    },
+    "explain": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Explication courte (1-2 phrases, optionnel)"
+    }
+  },
+  "required": ["schema", "bpm", "signature", "tracks"]
+}
+

@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "Acknowledgement.v1.schema.json",
+  "title": "Acknowledgement",
+  "description": "Preuve de lecture avec hashes SHA-256 des fichiers lus",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "Acknowledgement.v1",
+      "description": "Version du schéma"
+    },
+    "actor": {
+      "type": "string",
+      "description": "Identifiant de l'acteur (ex: ia.compositrice, contributeur.humain)"
+    },
+    "read": {
+      "type": "array",
+      "description": "Liste des fichiers lus avec leurs hashes SHA-256",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Chemin relatif du fichier (ex: AGENTS.md, README.md)"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "Hash SHA-256 du fichier"
+          }
+        },
+        "required": ["path", "sha256"]
+      },
+      "minItems": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Horodatage de la preuve de lecture (ISO 8601)"
+    }
+  },
+  "required": ["schema", "actor", "read", "timestamp"]
+}
+

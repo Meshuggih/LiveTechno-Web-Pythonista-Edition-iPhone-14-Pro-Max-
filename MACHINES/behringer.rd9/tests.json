@@ -1,0 +1,32 @@
+{
+  "machine": "moog.subsequent37",
+  "tests": [
+    {
+      "name": "Smoke test: pattern minimal",
+      "pattern": {
+        "lengthSteps": 16,
+        "resolutionPPQ": 96,
+        "steps": [
+          {"t": 0, "note": 48, "vel": 96},
+          {"t": 4, "note": 50, "vel": 96},
+          {"t": 8, "note": 53, "vel": 110},
+          {"t": 12, "note": 55, "vel": 100}
+        ]
+      },
+      "automation": [
+        {"target": "cutoff", "at": 0, "val": 0.25},
+        {"target": "cutoff", "at": 8, "val": 0.8}
+      ],
+      "expected": {
+        "notes": 4,
+        "automationPoints": 2
+      }
+    }
+  ],
+  "notes": [
+    "TODO: Ajouter des tests pour chaque paramètre CC/NRPN",
+    "TODO: Valider les courbes de conversion (lin/log/exp)",
+    "TODO: Tester les cas limites (min/max)"
+  ]
+}
+
