@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "AddMachine.v1.schema.json",
+  "title": "AddMachine",
+  "description": "Action : Ajouter une machine au projet",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "AddMachine.v1",
+      "description": "Version du schéma"
+    },
+    "machineId": {
+      "type": "string",
+      "pattern": "^[a-z]+\\.[a-z0-9]+$",
+      "description": "ID de la machine (vendor.model)"
+    },
+    "instanceId": {
+      "type": "string",
+      "description": "ID d'instance unique (optionnel, généré auto si absent)"
+    },
+    "midiChannel": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16,
+      "description": "Canal MIDI"
+    },
+    "position": {
+      "type": "object",
+      "description": "Position sur le bureau virtuel",
+      "properties": {
+        "x": {
+          "type": "number",
+          "description": "Coordonnée X"
+        },
+        "y": {
+          "type": "number",
+          "description": "Coordonnée Y"
+        }
+      },
+      "required": ["x", "y"]
+    },
+    "explain": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Explication courte (1-2 phrases, optionnel)"
+    }
+  },
+  "required": ["schema", "machineId", "midiChannel", "position"]
+}
+

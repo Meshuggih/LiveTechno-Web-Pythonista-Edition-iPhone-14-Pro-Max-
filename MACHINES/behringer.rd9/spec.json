@@ -1,0 +1,40 @@
+{
+  "schema": "Machine.v1",
+  "id": "behringer.rd9",
+  "name": "Behringer RD-9",
+  "vendor": "Behringer",
+  "model": "RD-9",
+  "type": "drum",
+  "midi": {
+    "ccMap": {
+      "_comment": "TODO: Compléter avec les valeurs du manuel officiel"
+    },
+    "nrpn": {
+      "_comment": "TODO: Vérifier si le RD-9 utilise NRPN"
+    }
+  },
+  "ui": {
+    "panel": [
+      {
+        "name": "Drums",
+        "controls": []
+      },
+      {
+        "name": "Levels",
+        "controls": []
+      },
+      {
+        "name": "Tuning",
+        "controls": []
+      }
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://www.behringer.com/downloads.html",
+      "pages": "TODO",
+      "revision": "TODO"
+    }
+  ]
+}
+

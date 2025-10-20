@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "Arrange.v1.schema.json",
+  "title": "Arrange",
+  "description": "Action : Définir la structure du morceau (intro, build, drop, outro)",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "Arrange.v1",
+      "description": "Version du schéma"
+    },
+    "sections": {
+      "type": "array",
+      "description": "Sections du morceau",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nom de la section (ex: intro, build, drop, outro)"
+          },
+          "bars": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Nombre de mesures"
+          },
+          "patterns": {
+            "type": "array",
+            "description": "Patterns actifs dans cette section (optionnel)",
+            "items": {
+              "type": "string",
+              "description": "ID de pattern"
+            }
+          }
+        },
+        "required": ["name", "bars"]
+      },
+      "minItems": 1
+    },
+    "explain": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Explication courte (1-2 phrases, optionnel)"
+    }
+  },
+  "required": ["schema", "sections"]
+}
+

@@ -1,0 +1,40 @@
+{
+  "schema": "Machine.v1",
+  "id": "roland.tb303",
+  "name": "Roland TB-303",
+  "vendor": "Roland",
+  "model": "TB-303",
+  "type": "synth",
+  "midi": {
+    "ccMap": {
+      "_comment": "TODO: Compléter avec les valeurs du manuel officiel"
+    },
+    "nrpn": {
+      "_comment": "TODO: Vérifier si le TB-303 utilise NRPN"
+    }
+  },
+  "ui": {
+    "panel": [
+      {
+        "name": "Oscillators",
+        "controls": []
+      },
+      {
+        "name": "Filter",
+        "controls": []
+      },
+      {
+        "name": "Envelopes",
+        "controls": []
+      }
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://www.roland.com/global/support/",
+      "pages": "TODO",
+      "revision": "TODO"
+    }
+  ]
+}
+

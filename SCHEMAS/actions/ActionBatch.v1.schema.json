@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "ActionBatch.v1.schema.json",
+  "title": "ActionBatch",
+  "description": "Action : Séquence ordonnée d'actions atomiques",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "ActionBatch.v1",
+      "description": "Version du schéma"
+    },
+    "actions": {
+      "type": "array",
+      "description": "Liste ordonnée d'actions à exécuter séquentiellement",
+      "items": {
+        "type": "object",
+        "description": "Action (AddMachine, CreatePattern, SetParam, Arrange, ExportPlan)",
+        "properties": {
+          "schema": {
+            "type": "string",
+            "enum": [
+              "AddMachine.v1",
+              "CreatePattern.v1",
+              "SetParam.v1",
+              "Arrange.v1",
+              "ExportPlan.v1"
+            ],
+            "description": "Type d'action"
+          }
+        },
+        "required": ["schema"]
+      },
+      "minItems": 1
+    },
+    "explain": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Explication courte (1-2 phrases, optionnel)"
+    }
+  },
+  "required": ["schema", "actions"]
+}
+

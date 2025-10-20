@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "CreatePattern.v1.schema.json",
+  "title": "CreatePattern",
+  "description": "Action : Créer un pattern rythmico-mélodique",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "CreatePattern.v1",
+      "description": "Version du schéma"
+    },
+    "patternId": {
+      "type": "string",
+      "description": "ID du pattern (optionnel, généré auto si absent)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Nom du pattern (optionnel)"
+    },
+    "targetMachine": {
+      "type": "string",
+      "description": "Machine cible (instanceId ou machineId)"
+    },
+    "lengthSteps": {
+      "type": "integer",
+      "enum": [12, 16, 32, 48, 64, 68, 128, 256],
+      "description": "Longueur en pas"
+    },
+    "resolutionPPQ": {
+      "type": "integer",
+      "enum": [96, 192, 480],
+      "description": "Résolution en PPQ"
+    },
+    "steps": {
+      "type": "array",
+      "description": "Liste des pas (notes/événements)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "t": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Position temporelle (en pas)"
+          },
+          "note": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 127,
+            "description": "Note MIDI"
+          },
+          "vel": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 127,
+            "description": "Vélocité"
+          },
+          "duration": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Durée en beats (optionnel)"
+          },
+          "microTime": {
+            "type": "integer",
+            "description": "Offset micro-timing en ticks (optionnel)"
+          },
+          "ratchet": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Nombre de sous-déclenchements (optionnel)"
+          },
+          "prob": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Probabilité (0.0-1.0, optionnel)"
+          },
+          "slide": {
+            "type": "boolean",
+            "description": "Slide/glide (optionnel)"
+          },
+          "accent": {
+            "type": "boolean",
+            "description": "Accent (optionnel)"
+          }
+        },
+        "required": ["t", "note", "vel"]
+      }
+    },
+    "automation": {
+      "type": "array",
+      "description": "Automations de paramètres",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "description": "Paramètre cible"
+          },
+          "at": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Position temporelle en pas"
+          },
+          "val": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Valeur normalisée (0.0-1.0)"
+          },
+          "easing": {
+            "type": "string",
+            "enum": ["lin", "log", "exp", "smooth"],
+            "description": "Type d'interpolation (optionnel)"
+          },
+          "duration": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Durée de la transition en beats (optionnel)"
+          }
+        },
+        "required": ["target", "at", "val"]
+      }
+    },
+    "swing": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Swing global (0.0-1.0, optionnel)"
+    },
+    "explain": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Explication courte (1-2 phrases, optionnel)"
+    }
+  },
+  "required": ["schema", "targetMachine", "lengthSteps", "resolutionPPQ", "steps"]
+}
+

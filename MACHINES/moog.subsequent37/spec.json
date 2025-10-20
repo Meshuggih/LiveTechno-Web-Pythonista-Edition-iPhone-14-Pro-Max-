@@ -1,0 +1,40 @@
+{
+  "schema": "Machine.v1",
+  "id": "moog.subsequent37",
+  "name": "Moog Subsequent 37",
+  "vendor": "Moog Music",
+  "model": "Subsequent 37",
+  "type": "synth",
+  "midi": {
+    "ccMap": {
+      "_comment": "TODO: Compléter avec les valeurs du manuel officiel"
+    },
+    "nrpn": {
+      "_comment": "TODO: Vérifier si le Subsequent 37 utilise NRPN"
+    }
+  },
+  "ui": {
+    "panel": [
+      {
+        "name": "Oscillators",
+        "controls": []
+      },
+      {
+        "name": "Filter",
+        "controls": []
+      },
+      {
+        "name": "Envelopes",
+        "controls": []
+      }
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://www.moogmusic.com/support",
+      "pages": "TODO",
+      "revision": "TODO"
+    }
+  ]
+}
+

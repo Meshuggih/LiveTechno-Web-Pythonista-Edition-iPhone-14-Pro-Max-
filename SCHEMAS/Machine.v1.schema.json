@@ -1,0 +1,231 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "Machine.v1.schema.json",
+  "title": "Machine",
+  "description": "Représentation d'une machine (synthé, boîte à rythmes, effet) avec parité de contrôle d'un appareil réel",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "Machine.v1",
+      "description": "Version du schéma"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z]+\\.[a-z0-9]+$",
+      "description": "Identifiant unique (vendor.model, ex: moog.subsequent37)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Nom complet de la machine"
+    },
+    "vendor": {
+      "type": "string",
+      "description": "Fabricant"
+    },
+    "model": {
+      "type": "string",
+      "description": "Modèle"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["synth", "drum", "effect", "other"],
+      "description": "Type de machine"
+    },
+    "midi": {
+      "type": "object",
+      "description": "Interface MIDI",
+      "properties": {
+        "ccMap": {
+          "type": "object",
+          "description": "Mapping des Control Changes (CC)",
+          "patternProperties": {
+            "^[0-9]+$": {
+              "type": "object",
+              "properties": {
+                "param": {
+                  "type": "string",
+                  "description": "Nom du paramètre"
+                },
+                "min": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 127,
+                  "description": "Valeur minimale"
+                },
+                "max": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 127,
+                  "description": "Valeur maximale"
+                },
+                "curve": {
+                  "type": "string",
+                  "enum": ["lin", "log", "exp"],
+                  "description": "Courbe de conversion"
+                },
+                "default": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 127,
+                  "description": "Valeur par défaut"
+                },
+                "source": {
+                  "type": "string",
+                  "description": "Source (manuel officiel, page)"
+                }
+              },
+              "required": ["param", "min", "max", "curve"]
+            }
+          }
+        },
+        "nrpn": {
+          "type": "object",
+          "description": "Mapping des NRPN (Non-Registered Parameter Number)",
+          "patternProperties": {
+            "^[0-9]+$": {
+              "type": "object",
+              "properties": {
+                "param": {
+                  "type": "string",
+                  "description": "Nom du paramètre"
+                },
+                "min": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16383,
+                  "description": "Valeur minimale"
+                },
+                "max": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16383,
+                  "description": "Valeur maximale"
+                },
+                "curve": {
+                  "type": "string",
+                  "enum": ["lin", "log", "exp"],
+                  "description": "Courbe de conversion"
+                },
+                "default": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16383,
+                  "description": "Valeur par défaut"
+                },
+                "source": {
+                  "type": "string",
+                  "description": "Source (manuel officiel, page)"
+                }
+              },
+              "required": ["param", "min", "max", "curve"]
+            }
+          }
+        },
+        "programChange": {
+          "type": "object",
+          "description": "Program Change (changement de preset)",
+          "properties": {
+            "min": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 127
+            },
+            "max": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 127
+            }
+          }
+        },
+        "bank": {
+          "type": "object",
+          "description": "Bank Select",
+          "properties": {
+            "msb": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 127,
+              "description": "Bank MSB (CC 0)"
+            },
+            "lsb": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 127,
+              "description": "Bank LSB (CC 32)"
+            }
+          }
+        }
+      },
+      "required": ["ccMap"]
+    },
+    "ui": {
+      "type": "object",
+      "description": "Interface utilisateur",
+      "properties": {
+        "panel": {
+          "type": "array",
+          "description": "Sections du panneau de contrôle",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Nom de la section"
+              },
+              "controls": {
+                "type": "array",
+                "description": "Contrôles de la section",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "param": {
+                      "type": "string",
+                      "description": "Nom du paramètre"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": ["knob", "slider", "switch", "button"],
+                      "description": "Type de contrôle"
+                    },
+                    "label": {
+                      "type": "string",
+                      "description": "Label affiché"
+                    }
+                  },
+                  "required": ["param", "type", "label"]
+                }
+              }
+            },
+            "required": ["name", "controls"]
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "Sources officielles (manuels, références)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL du manuel officiel"
+          },
+          "pages": {
+            "type": "string",
+            "description": "Pages pertinentes"
+          },
+          "revision": {
+            "type": "string",
+            "description": "Révision du manuel"
+          }
+        },
+        "required": ["url"]
+      }
+    }
+  },
+  "required": ["schema", "id", "name", "vendor", "model", "type", "midi"]
+}
+

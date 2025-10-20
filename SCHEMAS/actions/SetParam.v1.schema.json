@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "SetParam.v1.schema.json",
+  "title": "SetParam",
+  "description": "Action : Modifier un paramètre avec automation optionnelle",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "SetParam.v1",
+      "description": "Version du schéma"
+    },
+    "targetMachine": {
+      "type": "string",
+      "description": "Machine cible (instanceId ou machineId)"
+    },
+    "param": {
+      "type": "string",
+      "description": "Nom du paramètre (ex: cutoff, resonance)"
+    },
+    "value": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Valeur normalisée (0.0-1.0)"
+    },
+    "easing": {
+      "type": "string",
+      "enum": ["lin", "log", "exp", "smooth"],
+      "description": "Type d'interpolation (optionnel, défaut = lin)"
+    },
+    "durationBeats": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Durée de la transition en beats (optionnel, défaut = instantané)"
+    },
+    "explain": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Explication courte (1-2 phrases, optionnel)"
+    }
+  },
+  "required": ["schema", "targetMachine", "param", "value"]
+}
+

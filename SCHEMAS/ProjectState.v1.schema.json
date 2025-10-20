@@ -1,0 +1,168 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "ProjectState.v1.schema.json",
+  "title": "ProjectState",
+  "description": "État complet du projet (méta, machines, patterns, routing)",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "ProjectState.v1",
+      "description": "Version du schéma"
+    },
+    "meta": {
+      "type": "object",
+      "description": "Métadonnées du projet",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Nom du projet"
+        },
+        "bpm": {
+          "type": "number",
+          "minimum": 20,
+          "maximum": 300,
+          "description": "Tempo (BPM)"
+        },
+        "signature": {
+          "type": "string",
+          "pattern": "^[0-9]+/[0-9]+$",
+          "description": "Signature rythmique (ex: 4/4, 3/4)"
+        },
+        "ppq": {
+          "type": "integer",
+          "enum": [96, 192, 480],
+          "description": "Résolution globale (PPQ)"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date de création (ISO 8601)"
+        },
+        "modified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date de dernière modification (ISO 8601)"
+        }
+      },
+      "required": ["bpm", "signature", "ppq"]
+    },
+    "machines": {
+      "type": "array",
+      "description": "Machines actives dans le projet",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z]+\\.[a-z0-9]+$",
+            "description": "ID de la machine (vendor.model)"
+          },
+          "instanceId": {
+            "type": "string",
+            "description": "ID d'instance unique (ex: bass_1, drums_1)"
+          },
+          "midiChannel": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "description": "Canal MIDI"
+          },
+          "position": {
+            "type": "object",
+            "description": "Position sur le bureau virtuel",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "Coordonnée X"
+              },
+              "y": {
+                "type": "number",
+                "description": "Coordonnée Y"
+              }
+            },
+            "required": ["x", "y"]
+          },
+          "params": {
+            "type": "object",
+            "description": "Valeurs des paramètres (normalisées 0.0-1.0)",
+            "patternProperties": {
+              "^[a-zA-Z_][a-zA-Z0-9_]*$": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        },
+        "required": ["id", "instanceId", "midiChannel", "position"]
+      }
+    },
+    "patterns": {
+      "type": "array",
+      "description": "Patterns du projet",
+      "items": {
+        "$ref": "Pattern.v1.schema.json"
+      }
+    },
+    "routing": {
+      "type": "array",
+      "description": "Routage machine ↔ canal MIDI",
+      "items": {
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "description": "ID d'instance de la machine"
+          },
+          "midiChannel": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "description": "Canal MIDI"
+          },
+          "trackName": {
+            "type": "string",
+            "description": "Nom de la piste (pour export MIDI)"
+          }
+        },
+        "required": ["instanceId", "midiChannel"]
+      }
+    },
+    "arrangement": {
+      "type": "object",
+      "description": "Arrangement du morceau",
+      "properties": {
+        "sections": {
+          "type": "array",
+          "description": "Sections du morceau",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Nom de la section (ex: intro, build, drop)"
+              },
+              "bars": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Nombre de mesures"
+              },
+              "patterns": {
+                "type": "array",
+                "description": "Patterns actifs dans cette section",
+                "items": {
+                  "type": "string",
+                  "description": "ID de pattern"
+                }
+              }
+            },
+            "required": ["name", "bars"]
+          }
+        }
+      }
+    }
+  },
+  "required": ["schema", "meta", "machines", "patterns", "routing"]
+}
+

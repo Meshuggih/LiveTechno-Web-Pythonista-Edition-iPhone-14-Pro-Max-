@@ -1,0 +1,40 @@
+{
+  "schema": "Machine.v1",
+  "id": "eventide.h90",
+  "name": "Eventide H90",
+  "vendor": "Eventide",
+  "model": "H90",
+  "type": "effect",
+  "midi": {
+    "ccMap": {
+      "_comment": "TODO: Compléter avec les valeurs du manuel officiel"
+    },
+    "nrpn": {
+      "_comment": "TODO: Vérifier si le H90 utilise NRPN"
+    }
+  },
+  "ui": {
+    "panel": [
+      {
+        "name": "Oscillators",
+        "controls": []
+      },
+      {
+        "name": "Filter",
+        "controls": []
+      },
+      {
+        "name": "Envelopes",
+        "controls": []
+      }
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://www.eventideaudio.com/support/",
+      "pages": "TODO",
+      "revision": "TODO"
+    }
+  ]
+}
+
