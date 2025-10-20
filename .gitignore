@@ -1,0 +1,16 @@
+# Dépôt Pythonista Edition
+# Secrets / clés / caches
+*.zip
+*.tmp
+*.log
+__pycache__/ 
+.DS_Store
+.env
+.env.*
+secrets.json
+PYTHONISTA/HTML_Studio_config.json
+PYTHONISTA/HTML_Studio_logs.db
+# Exports/Tests lourds
+TESTS/goldens/exports/*.wav
+# Clés utilisateur (ne jamais commiter)
+PYTHONISTA/projet/user_openai_key.json
