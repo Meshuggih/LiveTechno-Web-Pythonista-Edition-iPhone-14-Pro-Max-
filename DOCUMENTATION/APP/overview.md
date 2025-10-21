@@ -8,9 +8,10 @@
 
 1. **Composition assistée par IA** : l'utilisateur dialogue avec l'IA qui génère des patterns, automations et arrangements au format JSON strict
 2. **Pré-écoute crédible** : DSP "de travail" (AudioWorklet/WASM) pour feedback sonore rapide
-3. **Export MIDI propre** : multi-pistes, BPM/signature, noms normalisés, déterministe
-4. **Parité de contrôle** : reproduire les interfaces de contrôle (CC/NRPN) des machines réelles, pas leur son exact
-5. **Discipline documentaire** : schémas JSON stricts, sources officielles, tests goldens
+3. **Vue DAW intégrée** : timeline multi-pistes + lanes d'automation + table de mixage géante, toujours synchronisées au bureau et aux machines.
+4. **Export MIDI propre** : multi-pistes, BPM/signature, noms normalisés, déterministe
+5. **Parité de contrôle** : reproduire les interfaces de contrôle (CC/NRPN) des machines réelles, pas leur son exact
+6. **Discipline documentaire** : schémas JSON stricts, sources officielles, tests goldens
 
 ## Non-objectifs
 
@@ -42,9 +43,10 @@ Le lecteur intégré fournit :
 
 1. **Gate OpenAI** : écran d'accueil pour saisir la clé API ou activer Mock AI
 2. **Bureau virtuel** : canvas plein écran avec grille, drag/resize de panneaux machines
-3. **Chat IA** : dock en bas pour dialoguer avec l'IA compositrice
-4. **Palette +Machine** : ajouter des clones de machines réelles (filtrable par type/marque)
-5. **Séquenceurs** : multi-longueurs (12/16/32/48/64/68/128/256 pas) avec micro-timing, ratchet, probabilité, swing
+3. **Vue Arrangement & Mixer** : timeline façon Logic Pro + table de mixage monumentale avec bus, sends, automations visibles.
+4. **Chat IA** : dock en bas pour dialoguer avec l'IA compositrice
+5. **Palette +Machine** : ajouter des clones de machines réelles (filtrable par type/marque)
+6. **Séquenceurs** : multi-longueurs (12/16/32/48/64/68/128/256 pas) avec micro-timing, ratchet, probabilité, swing
 
 ### Flux utilisateur typique
 
@@ -55,9 +57,9 @@ Le lecteur intégré fournit :
 5. Ajouter des machines via la palette +Machine
 6. Dialoguer avec l'IA : "Compose un groove funky"
 7. L'IA renvoie des Actions JSON (AddMachine, CreatePattern, SetParam, Arrange)
-8. L'app valide et applique les actions
-9. Pré-écoute dans l'app (DSP AudioWorklet)
-10. Export MIDI multi-pistes pour Logic/Live/boîtiers
+8. L'app valide et applique les actions, synchronise timeline, câblage virtuel et console
+9. Pré-écoute dans l'app (DSP AudioWorklet) + monitoring mixeur
+10. Export MIDI multi-pistes pour Logic/Live/boîtiers + plan du routing virtuel
 
 ## Modèles de données
 
