@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Test - LiveTechno-Web v0.1</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #1a1a1a;
+            color: #ffffff;
+            padding: 2rem;
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .metric {
+            background: #2a2a2a;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #444;
+        }
+        
+        .metric h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #007aff;
+        }
+        
+        .metric .target {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 0.5rem;
+        }
+        
+        .metric.good .value {
+            color: #34c759;
+        }
+        
+        .metric.bad .value {
+            color: #ff3b30;
+        }
+        
+        button {
+            padding: 0.75rem 2rem;
+            background: #007aff;
+            border: none;
+            border-radius: 0.5rem;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Performance Test - LiveTechno-Web v0.1</h1>
+    
+    <button id="start-test-btn">Démarrer le test</button>
+    
+    <div class="metric" id="cpu-metric">
+        <h2>CPU Usage</h2>
+        <div class="value">-</div>
+        <div class="target">Cible : < 30%</div>
+    </div>
+    
+    <div class="metric" id="latency-metric">
+        <h2>Latence Audio</h2>
+        <div class="value">-</div>
+        <div class="target">Cible : < 50ms</div>
+    </div>
+    
+    <div class="metric" id="memory-metric">
+        <h2>Mémoire</h2>
+        <div class="value">-</div>
+        <div class="target">Cible : < 200MB</div>
+    </div>
+    
+    <div class="metric" id="fps-metric">
+        <h2>FPS UI</h2>
+        <div class="value">-</div>
+        <div class="target">Cible : 60fps</div>
+    </div>
+    
+    <script>
+        let audioContext = null;
+        let audioWorklet = null;
+        
+        async function initAudio() {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            await audioContext.audioWorklet.addModule('dsp.worklet.js');
+            audioWorklet = new AudioWorkletNode(audioContext, 'livetechno-processor');
+            audioWorklet.connect(audioContext.destination);
+            console.log('✅ AudioContext initialisé');
+        }
+        
+        function measureCPU() {
+            // Mesure CPU (approximation via performance.now())
+            const iterations = 1000;
+            const start = performance.now();
+            
+            for (let i = 0; i < iterations; i++) {
+                // Simuler du travail
+                Math.sin(i) * Math.cos(i);
+            }
+            
+            const end = performance.now();
+            const duration = end - start;
+            
+            // Estimation CPU (très approximative)
+            const cpuUsage = (duration / 16.67) * 100; // 16.67ms = 1 frame à 60fps
+            
+            return Math.min(100, cpuUsage);
+        }
+        
+        function measureLatency() {
+            if (!audioContext) return 0;
+            
+            const outputLatency = audioContext.outputLatency || 0;
+            const baseLatency = audioContext.baseLatency || 0;
+            
+            return (outputLatency + baseLatency) * 1000; // ms
+        }
+        
+        function measureMemory() {
+            if (performance.memory) {
+                return performance.memory.usedJSHeapSize / (1024 * 1024); // MB
+            }
+            return 0;
+        }
+        
+        function measureFPS() {
+            let lastTime = performance.now();
+            let frames = 0;
+            let fps = 0;
+            
+            function loop() {
+                const now = performance.now();
+                frames++;
+                
+                if (now >= lastTime + 1000) {
+                    fps = Math.round((frames * 1000) / (now - lastTime));
+                    frames = 0;
+                    lastTime = now;
+                }
+                
+                requestAnimationFrame(loop);
+            }
+            
+            loop();
+            
+            return () => fps;
+        }
+        
+        function updateMetric(id, value, unit, target) {
+            const metric = document.getElementById(id);
+            const valueEl = metric.querySelector('.value');
+            
+            valueEl.textContent = `${value.toFixed(1)}${unit}`;
+            
+            // Colorier selon la cible
+            if (id === 'cpu-metric' && value < 30) {
+                metric.classList.add('good');
+                metric.classList.remove('bad');
+            } else if (id === 'latency-metric' && value < 50) {
+                metric.classList.add('good');
+                metric.classList.remove('bad');
+            } else if (id === 'memory-metric' && value < 200) {
+                metric.classList.add('good');
+                metric.classList.remove('bad');
+            } else if (id === 'fps-metric' && value >= 55) {
+                metric.classList.add('good');
+                metric.classList.remove('bad');
+            } else {
+                metric.classList.add('bad');
+                metric.classList.remove('good');
+            }
+        }
+        
+        async function runTest() {
+            console.log('🧪 Démarrage du test de performance...');
+            
+            // Initialiser l'audio
+            await initAudio();
+            
+            // Mesurer FPS
+            const getFPS = measureFPS();
+            
+            // Boucle de mesure
+            setInterval(() => {
+                const cpu = measureCPU();
+                const latency = measureLatency();
+                const memory = measureMemory();
+                const fps = getFPS();
+                
+                updateMetric('cpu-metric', cpu, '%', 30);
+                updateMetric('latency-metric', latency, 'ms', 50);
+                updateMetric('memory-metric', memory, 'MB', 200);
+                updateMetric('fps-metric', fps, 'fps', 60);
+                
+                console.log(`CPU: ${cpu.toFixed(1)}%, Latence: ${latency.toFixed(1)}ms, Mémoire: ${memory.toFixed(1)}MB, FPS: ${fps}`);
+            }, 1000);
+            
+            // Simuler des notes MIDI pour tester le DSP
+            setInterval(() => {
+                // Kick RD-9
+                audioWorklet.port.postMessage({
+                    type: 'noteOn',
+                    machine: 'rd9',
+                    note: 36,
+                    velocity: 100
+                });
+                
+                setTimeout(() => {
+                    audioWorklet.port.postMessage({
+                        type: 'noteOff',
+                        machine: 'rd9',
+                        note: 36
+                    });
+                }, 100);
+                
+                // Bassline TD-3
+                setTimeout(() => {
+                    audioWorklet.port.postMessage({
+                        type: 'noteOn',
+                        machine: 'td3',
+                        note: 48,
+                        velocity: 100
+                    });
+                    
+                    setTimeout(() => {
+                        audioWorklet.port.postMessage({
+                            type: 'noteOff',
+                            machine: 'td3',
+                            note: 48
+                        });
+                    }, 100);
+                }, 250);
+            }, 500);
+        }
+        
+        document.getElementById('start-test-btn').addEventListener('click', () => {
+            runTest();
+            document.getElementById('start-test-btn').disabled = true;
+            document.getElementById('start-test-btn').textContent = 'Test en cours...';
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>LiveTechno-Web v0.1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Gate OpenAI (Pop-up) -->
+    <div id="gate-modal" class="modal">
+        <div class="modal-content">
+            <h2>🎹 LiveTechno-Web v0.1</h2>
+            <p>Entrez votre clé API OpenAI pour accéder au bureau virtuel</p>
+            <input type="password" id="api-key-input" placeholder="sk-...">
+            <button id="validate-key-btn">Valider</button>
+            <div id="gate-error" class="error"></div>
+        </div>
+    </div>
+
+    <!-- Bureau virtuel -->
+    <div id="desktop" class="desktop hidden">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎹 LiveTechno-Web v0.1</h1>
+            <div class="controls">
+                <button id="add-machine-btn">+ Machine</button>
+                <button id="export-midi-btn">Export MIDI</button>
+                <button id="save-project-btn">💾 Save</button>
+                <button id="load-project-btn">📂 Load</button>
+            </div>
+        </div>
+
+        <!-- Canvas (Bureau virtuel) -->
+        <div class="canvas-container">
+            <canvas id="desktop-canvas"></canvas>
+        </div>
+
+        <!-- Timeline -->
+        <div class="timeline-container">
+            <div class="timeline-header">
+                <h3>Timeline</h3>
+                <div class="timeline-controls">
+                    <button id="play-btn">▶️</button>
+                    <button id="stop-btn">⏹️</button>
+                    <span id="bpm-display">BPM: 128</span>
+                    <input type="range" id="bpm-slider" min="60" max="200" value="128">
+                </div>
+            </div>
+            <div class="timeline-tracks" id="timeline-tracks">
+                <!-- Tracks will be added dynamically -->
+            </div>
+        </div>
+
+        <!-- Chat IA -->
+        <div class="chat-container">
+            <div class="chat-header">
+                <h3>💬 Chat IA (GPT-4.1-mini)</h3>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="chat-message system">
+                    Bienvenue ! Demandez-moi de créer des patterns, par exemple : "Crée un kick 4/4 sur le RD-9"
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chat-input" placeholder="Tapez votre commande...">
+                <button id="chat-send-btn">Envoyer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Palette de machines (modal) -->
+    <div id="machine-palette-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Ajouter une machine</h2>
+            <div class="machine-list">
+                <div class="machine-item" data-machine-id="behringer.rd9">
+                    <h3>Behringer RD-9</h3>
+                    <p>Boîte à rythmes (clone TR-909)</p>
+                    <button class="add-machine-btn" data-machine-id="behringer.rd9">Ajouter</button>
+                </div>
+                <div class="machine-item" data-machine-id="behringer.td3">
+                    <h3>Behringer TD-3</h3>
+                    <p>Synthé basse (clone TB-303)</p>
+                    <button class="add-machine-btn" data-machine-id="behringer.td3">Ajouter</button>
+                </div>
+            </div>
+            <button id="close-palette-btn">Fermer</button>
+        </div>
+    </div>
+
+    <!-- Séquenceur RD-9 (modal) -->
+    <div id="rd9-sequencer-modal" class="modal hidden">
+        <div class="modal-content sequencer-modal">
+            <h2>Behringer RD-9 - Séquenceur</h2>
+            <div class="sequencer-grid" id="rd9-grid">
+                <!-- Grid will be generated dynamically -->
+            </div>
+            <div class="sequencer-controls">
+                <button id="rd9-play-btn">▶️ Play</button>
+                <button id="rd9-stop-btn">⏹️ Stop</button>
+                <button id="rd9-save-btn">💾 Save Pattern</button>
+            </div>
+            <button id="close-rd9-btn">Fermer</button>
+        </div>
+    </div>
+
+    <!-- Séquenceur TD-3 (modal) -->
+    <div id="td3-sequencer-modal" class="modal hidden">
+        <div class="modal-content sequencer-modal">
+            <h2>Behringer TD-3 - Séquenceur</h2>
+            <div class="sequencer-grid" id="td3-grid">
+                <!-- Grid will be generated dynamically -->
+            </div>
+            <div class="td3-params">
+                <label>Cutoff: <input type="range" id="td3-cutoff" min="0" max="127" value="64"></label>
+                <label>Resonance: <input type="range" id="td3-resonance" min="0" max="127" value="32"></label>
+                <label>Env Mod: <input type="range" id="td3-envmod" min="0" max="127" value="80"></label>
+                <label>Decay: <input type="range" id="td3-decay" min="0" max="127" value="48"></label>
+            </div>
+            <div class="sequencer-controls">
+                <button id="td3-play-btn">▶️ Play</button>
+                <button id="td3-stop-btn">⏹️ Stop</button>
+                <button id="td3-save-btn">💾 Save Pattern</button>
+            </div>
+            <button id="close-td3-btn">Fermer</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js" type="module"></script>
+</body>
+</html>
+
