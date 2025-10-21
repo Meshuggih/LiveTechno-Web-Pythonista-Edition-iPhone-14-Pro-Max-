@@ -21,9 +21,9 @@
 
 ---
 
-## 1) Vision & frontières
-
 - **Objectif** : un **setup live techno** assisté par IA. L’artiste déclare ses **machines réelles**, compose avec l’**IA compositrice**, pré-écoute dans l’app, exporte en **MIDI** pour piloter ses **vrais synthés/effets** (Logic/Live/standalone).
+- **Vue arrangement complète** : le bureau intègre une **timeline multi-pistes** façon Logic/Live avec lanes MIDI et automation superposées, synchronisée aux patterns des machines et à la table de mixage.
+- **Symbiose IA ↔ app** : le **GPT intégré** manipule directement la timeline, les patterns et le routage comme s’il était un membre natif de l’app; l’historique IA documente les décisions appliquées.
 - **Clones** : on vise la **parité de contrôle** (boutons, potards, menus, **MIDI CC/NRPN**), **pas** l’émulation analogique exacte. Le DSP interne sert à **auditionner**, pas à remplacer les originaux.
 - **Échelle** : étude et intégration progressive de **centaines** de machines (synthés/boîtes/FX), à partir de leurs **manuels officiels** (sources à l’appui).
 - **Non-objectifs** : pas de streaming audio serveur; pas d’écriture automatique vers périphériques réels sans confirmation; pas d’émulation “bit-perfect”.
@@ -36,6 +36,7 @@ README.md                          ← CE document (à jour, exhaustif)
 AGENTS.md                          ← Règles IMPÉRATIVES pour toutes les IA
 DOCUMENTATION/                     ← À LIRE AVANT TOUT CODE (obligation)
 APP/                             ← Doc de l’app (générée par IA, tenue à jour)
+virtual_setup.md               ← Vision détaillée du bureau, timeline et câblage
 MACHINES/                        ← Doc manuelle ajoutée par le mainteneur : manuels, schémas, pratiques DSP, CC/NRPN sourcés
 CODING/                          ← Normes de code (OOP), TODO policy, génération .md, logs SQLite, sauvegardes
 SCHEMAS/                           ← JSON Schema (Machine.v1, Pattern.v1, ProjectState.v1, Actions.v1, etc.)
@@ -50,6 +51,7 @@ dsp.worklet.js                 ← DSP de pré-écoute (approx), + .wasm optionn
 machines/                      ← Spécifs JSON machines utilisées par la maquette
 presets/                       ← Presets/kits/patterns démo
 assets/                        ← Icônes, IRs, images
+virtual_setup.md               ← Spécification de la vue bureau/timeline/table de mixage
 TOOLS/                             ← Validateurs JSON, linter CC/NRPN, générateurs d’index
 TESTS/                             ← Goldens (patterns de référence, exports MIDI attendus)
 .gitignore                         ← Clés/exports/caches, fichiers locaux

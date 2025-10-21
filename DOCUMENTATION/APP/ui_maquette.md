@@ -67,7 +67,8 @@ Le lecteur intégré est un serveur HTTP local qui permet de charger l'applicati
 2. **Panneaux machines** : représentations visuelles des machines ajoutées
 3. **Grille magnétique** : alignement automatique des panneaux
 4. **Zones de regroupement** : organiser les machines par type/fonction
-5. **Toolbar** : boutons d'action (+ Machine, Export, Settings)
+5. **Visualisation câbles** : tracés automatiques des câbles MIDI Thru et audio (jacks) entre machines, thru box et table de mixage.
+6. **Toolbar** : boutons d'action (+ Machine, Export, Settings)
 
 #### Interactions
 
@@ -75,6 +76,7 @@ Le lecteur intégré est un serveur HTTP local qui permet de charger l'applicati
 - **Resize** : redimensionner les panneaux
 - **Double-clic** : ouvrir l'éditeur de machine
 - **Clic droit** : menu contextuel (dupliquer, supprimer, etc.)
+- **Routeur** : appui long sur un port pour rediriger un câble vers une autre destination.
 
 ### Palette +Machine
 
@@ -157,17 +159,56 @@ Le lecteur intégré est un serveur HTTP local qui permet de charger l'applicati
 2. **Step sequencer** : grille de pas
 3. **Automation lanes** : courbes de paramètres
 
+### Vue timeline & clips
+
+**Objectif** : offrir une vue arrangement façon DAW.
+
+#### Fonctionnalités
+
+- **Multi-pistes** : une lane par machine + lanes d'automation superposées.
+- **Clips** : représentation graphique des patterns (couleur par machine, badges IA quand générés par GPT).
+- **Zoom** : pinch/scroll, navigation par mini-map.
+- **Loops & marqueurs** : définition de boucles, sections (intro/build/drop/outro) et marqueurs custom.
+- **Edition directe** : duplication Alt+drag, raccourcis gestuels pour split/join.
+
+### Table de mixage géante
+
+**Objectif** : centraliser le mixage de toutes les machines virtuelles.
+
+#### Fonctionnalités
+
+- **Faders** : volume, mute, solo, pré/post.
+- **Panos** : panoramique + width.
+- **Aux sends** : A/B/C paramétrables (reverb/delay/outboard).
+- **Bus** : DRUM BUS, SYNTH BUS, FX BUS avec VU-mètres dédiés.
+- **Canaux IA** : indicateur lumineux quand l'IA modifie un paramètre.
+- **Assignation automatique** : chaque machine ajoutée crée une tranche avec canal MIDI et port audio virtuel affichés.
+
+### Visualisation du câblage
+
+**Objectif** : montrer le setup live complet (MIDI + audio).
+
+#### Fonctionnalités
+
+- **Câbles dynamiques** : tracés Bézier/orthogonaux auto, couleurs par type (MIDI, audio, CV).
+- **Boîte MIDI Thru** : hub central affiché avec ports numérotés.
+- **Table de mixage** : destination finale, avec inserts/returns visibles.
+- **Interactions** : double-tap pour détails (latence, canal), drag pour rerouter, highlight lors de la lecture.
+- **Capture** : export PNG/PDF du schéma pour usage studio.
+
 ### Arrangement
 
 **Objectif** : structurer le morceau
 
 #### Fonctionnalités
 
-- **Timeline** : vue horizontale du morceau
+- **Timeline** : vue horizontale du morceau (synchro avec la vue timeline & clips)
 - **Sections** : intro, build, drop, outro
-- **Patterns** : placement des patterns sur la timeline
+- **Patterns** : placement des patterns sur la timeline avec preview de contenu
 - **Mute/Solo** : par piste
 - **Marqueurs** : annotations
+- **Automations** : lanes CC/NRPN, affichage des courbes générées par l'IA
+- **Historiques IA** : badges listant les actions GPT appliquées
 
 ### Export MIDI
 
@@ -179,7 +220,8 @@ Le lecteur intégré est un serveur HTTP local qui permet de charger l'applicati
 - **Noms normalisés** : BASS, DRUMS, LEAD, etc.
 - **BPM/signature** : encodage dans le fichier MIDI
 - **Mapping canal** : respecter `ProjectState.routing`
-- **Aperçu** : liste des événements avant export
+- **Aperçu** : liste des événements avant export + rappel du routing/câblage
+- **Plan du setup** : export parallèle d'un schéma du câblage virtuel
 
 #### Format
 
