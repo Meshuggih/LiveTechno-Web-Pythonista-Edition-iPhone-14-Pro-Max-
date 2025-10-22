@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>LiveTechno-Web v0.1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Gate OpenAI -->
+    <div id="gate-modal" class="modal">
+        <div class="modal-content">
+            <h2>🎹 LiveTechno-Web v0.1</h2>
+            <p>Entrez votre clé API OpenAI</p>
+            <input type="password" id="api-key-input" placeholder="sk-...">
+            <button id="validate-key-btn">Valider</button>
+            <div id="gate-error" class="error"></div>
+        </div>
+    </div>
+
+    <!-- Bureau -->
+    <div id="desktop" class="desktop hidden">
+        <div class="header">
+            <h1>🎹 LiveTechno-Web v0.1</h1>
+            <div class="controls">
+                <button id="add-machine-btn">+ Machine</button>
+                <button id="export-midi-btn">Export MIDI</button>
+                <button id="save-btn">💾</button>
+                <button id="load-btn">📂</button>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="desktop-canvas"></canvas>
+        </div>
+
+        <div class="timeline-container">
+            <div class="timeline-header">
+                <h3>Timeline</h3>
+                <div class="timeline-controls">
+                    <button id="play-btn">▶️</button>
+                    <button id="stop-btn">⏹️</button>
+                    <span id="bpm-display">BPM: 128</span>
+                    <input type="range" id="bpm-slider" min="60" max="200" value="128">
+                </div>
+            </div>
+            <div class="timeline-tracks" id="timeline-tracks"></div>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <h3>💬 Chat IA</h3>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="chat-message system">
+                    Bienvenue ! Demandez-moi de créer des patterns, ex: "Crée un kick 4/4 sur le RD-9"
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chat-input" placeholder="Tapez votre commande...">
+                <button id="chat-send-btn">Envoyer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Palette machines -->
+    <div id="machine-palette-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Ajouter une machine</h2>
+            <div class="machine-list">
+                <div class="machine-item">
+                    <h3>Behringer RD-9</h3>
+                    <p>Boîte à rythmes (TR-909)</p>
+                    <button class="add-machine-btn" data-machine-id="behringer.rd9">Ajouter</button>
+                </div>
+                <div class="machine-item">
+                    <h3>Behringer TD-3</h3>
+                    <p>Synthé basse (TB-303)</p>
+                    <button class="add-machine-btn" data-machine-id="behringer.td3">Ajouter</button>
+                </div>
+            </div>
+            <button id="close-palette-btn">Fermer</button>
+        </div>
+    </div>
+
+    <!-- Séquenceur RD-9 -->
+    <div id="rd9-sequencer-modal" class="modal hidden">
+        <div class="modal-content sequencer-modal">
+            <h2>RD-9 Séquenceur</h2>
+            <div class="sequencer-grid" id="rd9-grid"></div>
+            <div class="sequencer-controls">
+                <button id="rd9-play-btn">▶️</button>
+                <button id="rd9-stop-btn">⏹️</button>
+                <button id="rd9-save-btn">💾</button>
+            </div>
+            <button id="close-rd9-btn">Fermer</button>
+        </div>
+    </div>
+
+    <!-- Séquenceur TD-3 -->
+    <div id="td3-sequencer-modal" class="modal hidden">
+        <div class="modal-content sequencer-modal">
+            <h2>TD-3 Séquenceur</h2>
+            <div class="sequencer-grid" id="td3-grid"></div>
+            <div class="td3-params">
+                <label>Cutoff: <input type="range" id="td3-cutoff" min="0" max="127" value="64"></label>
+                <label>Resonance: <input type="range" id="td3-resonance" min="0" max="127" value="32"></label>
+            </div>
+            <div class="sequencer-controls">
+                <button id="td3-play-btn">▶️</button>
+                <button id="td3-stop-btn">⏹️</button>
+                <button id="td3-save-btn">💾</button>
+            </div>
+            <button id="close-td3-btn">Fermer</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
